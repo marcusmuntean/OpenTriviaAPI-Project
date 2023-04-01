@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
 
 function App() {
+  const [value, setValue] = useState({});
+
+  useEffect(() => {
+    getJSON(setValue);
+  }, []);
+
+  const getJSON = (setData) => {
+    fetch(
+      "https://opentdb.com/api.php?amount=10&category=21&difficulty=medium&type=multiple"
+    )
+      .then((result) => result.json())
+      .then((data) => setData(data.results));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App"></div>
+      <Board data={value} />
+    </>
   );
 }
+
+function Board(props) {
+  return (
+    <>
+      <p>{JSON.stringify(props.data)}</p>
+    </>
+  );
+}
+
+//function Question() {}
 
 export default App;

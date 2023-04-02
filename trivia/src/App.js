@@ -45,13 +45,14 @@ function Board(props) {
 
 function Question(props) {
   const [correct, SetCorrect] = useState();
+  const [order] = useState(shuffle([0, 1, 2, 3]));
 
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
 
     // While there remain elements to shuffle.
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
@@ -66,7 +67,7 @@ function Question(props) {
     return array;
   }
 
-  const order = [0, 1, 2, 3];
+  //const order = [0, 1, 2, 3];
   let questionNum = props.questionNumber;
   questionNum++;
 
@@ -119,7 +120,7 @@ function Answer(props) {
   const [color, SetColor] = useState();
 
   const HandleClick = (choice) => {
-    if (choice == props.correctAnswer) {
+    if (choice === props.correctAnswer) {
       SetColor("success");
       props.stateChanger("Correct!");
     } else {

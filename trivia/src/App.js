@@ -19,7 +19,9 @@ function App() {
 
   return (
     <>
-      <Board data={value} />
+      <div className="App">
+        <Board data={value} />
+      </div>
     </>
   );
 }

@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 function App() {
   const [value, setValue] = useState({});
@@ -65,6 +67,8 @@ function Question(props) {
   }
 
   const order = [0, 1, 2, 3];
+  let questionNum = props.questionNumber;
+  questionNum++;
 
   // if (correct == undefined) {
   //   shuffle(order);
@@ -73,48 +77,65 @@ function Question(props) {
   const arrayOfChoices = props.incorrectAnswer;
   arrayOfChoices.push(props.correctAnswer);
 
+  return (
+    <>
+      <Typography variant="h4">
+        {questionNum}: {props.questionToAsk}
+      </Typography>
+      <p></p>
+      <Answer
+        answerChoice={arrayOfChoices[order[0]]}
+        correctAnswer={props.correctAnswer}
+        stateChanger={SetCorrect}
+      />
+      <p></p>
+      <Answer
+        answerChoice={arrayOfChoices[order[1]]}
+        correctAnswer={props.correctAnswer}
+        stateChanger={SetCorrect}
+      />
+      <p></p>
+      <Answer
+        answerChoice={arrayOfChoices[order[2]]}
+        correctAnswer={props.correctAnswer}
+        stateChanger={SetCorrect}
+      />
+      <p></p>
+      <Answer
+        answerChoice={arrayOfChoices[order[3]]}
+        correctAnswer={props.correctAnswer}
+        stateChanger={SetCorrect}
+      />
+      <p></p>
+      <p></p>
+      <Typography variant="h6">{correct}</Typography>
+      <Divider />
+      <p></p>
+    </>
+  );
+}
+
+function Answer(props) {
+  const [color, SetColor] = useState();
+
   const HandleClick = (choice) => {
     if (choice == props.correctAnswer) {
-      SetCorrect("Correct!");
+      SetColor("success");
+      props.stateChanger("Correct!");
     } else {
-      SetCorrect("Incorrect!");
+      SetColor("error");
+      props.stateChanger("Incorrect!");
     }
   };
 
   return (
-    <>
-      <h2>
-        {props.questionNumber}: {props.questionToAsk}
-      </h2>
-      <Button
-        variant="contained"
-        onClick={() => HandleClick(arrayOfChoices[order[0]])}
-      >
-        {arrayOfChoices[order[0]]}
-      </Button>
-      <p></p>
-      <Button
-        variant="contained"
-        onClick={() => HandleClick(arrayOfChoices[order[1]])}
-      >
-        {arrayOfChoices[order[1]]}
-      </Button>
-      <p></p>
-      <Button
-        variant="contained"
-        onClick={() => HandleClick(arrayOfChoices[order[2]])}
-      >
-        {arrayOfChoices[order[2]]}
-      </Button>
-      <p></p>
-      <Button
-        variant="contained"
-        onClick={() => HandleClick(arrayOfChoices[order[3]])}
-      >
-        {arrayOfChoices[order[3]]}
-      </Button>
-      <h4>{correct}</h4>
-    </>
+    <Button
+      variant="contained"
+      color={color}
+      onClick={() => HandleClick(props.answerChoice)}
+    >
+      {props.answerChoice}
+    </Button>
   );
 }
 
